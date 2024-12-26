@@ -166,12 +166,14 @@ static inline void handleALEX(char* buffer)
 			//firmware does determine the filter.
 			uint16_t hpf = 0, lpf = 0;
 
-			if (currentfreq < 1416000) hpf = 0x20; /* bypass */
-			else if (currentfreq < 6500000) hpf = 0x10; /* 1.5 MHz HPF */
-			else if (currentfreq < 9500000) hpf = 0x08; /* 6.5 MHz HPF */
-			else if (currentfreq < 13000000) hpf = 0x04; /* 9.5 MHz HPF */
-			else if (currentfreq < 20000000) hpf = 0x01; /* 13 MHz HPF */
-			else hpf = 0x02; /* 20 MHz HPF */
+			if (currentfreq < 1500000) hpf = 0x0A; /* bypass */
+			else if (currentfreq <  2500000) hpf = 0x06; /* 160 */
+			else if (currentfreq <  6000000) hpf = 0x02; /* 80/60 */
+			else if (currentfreq <  7400000) hpf = 0x08; /* 40m */
+                        else if (currentfreq < 10300000) hpf = 0x04; /* 30m */
+                        else if (currentfreq < 15000000) hpf = 0x00; /* 20m */
+			else if (currentfreq < 21900000) hpf = 0x0E; /* 17/15 */
+			else hpf = 0x12; /* higher */
 
 			if (currentfreq > 35000000) lpf = 0x10; /* bypass */
 			else if (currentfreq > 20000000) lpf = 0x20; /* 15/12/10 meters */
@@ -221,21 +223,20 @@ static inline void handleFiltersBoard(char* buffer, int cw)
             //firmware does determine the filter.
             uint16_t hpf = 0, lpf = 0;
 
-	    if (currentfreq < 1500000) hpf = 0x0A; /* bypass */
-	    else if (currentfreq <  2500000) hpf = 0x06; /* 160 */
-	    else if (currentfreq <  6000000) hpf = 0x02; /* 80/60 */
-	    else if (currentfreq <  7400000) hpf = 0x08; /* 40m */
-            else if (currentfreq < 10300000) hpf = 0x04; /* 30m */
-            else if (currentfreq < 15000000) hpf = 0x00; /* 20m */
-	    else if (currentfreq < 21900000) hpf = 0x0E; /* 17/15 */
-	    else hpf = 0x12; /* higher */
+            if (currentfreq < 1416000) hpf = 0x20; /* bypass */
+            else if (currentfreq < 6500000) hpf = 0x10; /* 1.5 MHz HPF */
+            else if (currentfreq < 9500000) hpf = 0x08; /* 6.5 MHz HPF */
+            else if (currentfreq < 13000000) hpf = 0x04; /* 9.5 MHz HPF */
+            else if (currentfreq < 20000000) hpf = 0x01; /* 13 MHz HPF */
+            else hpf = 0x02; /* 20 MHz HPF */
 
-	    if (currentfreq > 35000000) lpf = 0x10; /* bypass */
-	    else if (currentfreq > 20000000) lpf = 0x20; /* 15/12/10 meters */
-	    else if (currentfreq > 11000000) lpf = 0x40; /* 20/17 meters */
-	    else if (currentfreq >  5500000) lpf = 0x02; /* 40/30 meters */
-	    else if (currentfreq >  2500000) lpf = 0x04; /* 80/60 meters */
-       	    else lpf = 0x08; /* 160 meters */
+            if (currentfreq > 32000000) lpf = 0x10; /* bypass */
+            else if (currentfreq > 22000000) lpf = 0x20; /* 12/10 meters */
+            else if (currentfreq > 15000000) lpf = 0x40; /* 17/15 meters */
+            else if (currentfreq > 8000000) lpf = 0x01; /* 30/20 meters */
+            else if (currentfreq > 4500000) lpf = 0x02; /* 60/40 meters */
+            else if (currentfreq > 2400000) lpf = 0x04; /* 80 meters */
+            else lpf = 0x08; /* 160 meters */
 
             i2c_alex_data = hpf << 8 | lpf;
         }
