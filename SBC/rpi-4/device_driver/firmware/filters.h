@@ -173,12 +173,11 @@ static inline void handleALEX(char* buffer)
 			else if (currentfreq < 20000000) hpf = 0x01; /* 13 MHz HPF */
 			else hpf = 0x02; /* 20 MHz HPF */
 
-			if (currentfreq > 32000000) lpf = 0x10; /* bypass */
-			else if (currentfreq > 22000000) lpf = 0x20; /* 12/10 meters */
-			else if (currentfreq > 15000000) lpf = 0x40; /* 17/15 meters */
-			else if (currentfreq > 8000000) lpf = 0x01; /* 30/20 meters */
-			else if (currentfreq > 4500000) lpf = 0x02; /* 60/40 meters */
-			else if (currentfreq > 2400000) lpf = 0x04; /* 80 meters */
+			if (currentfreq > 35000000) lpf = 0x10; /* bypass */
+			else if (currentfreq > 20000000) lpf = 0x20; /* 15/12/10 meters */
+			else if (currentfreq > 11000000) lpf = 0x40; /* 20/17 meters */
+			else if (currentfreq >  5500000) lpf = 0x02; /* 40/30 meters */
+			else if (currentfreq >  2500000) lpf = 0x04; /* 80/60 meters */
 			else lpf = 0x08; /* 160 meters */
 
 			i2c_alex_data = hpf << 8 | lpf;
