@@ -174,8 +174,8 @@ static inline void handleALEX(char* buffer)
 			else hpf = 0x02; /* 20 MHz HPF */
 
 			if (currentfreq > 35000000) lpf = 0x10; /* bypass */
-			else if (currentfreq > 20000000) lpf = 0x20; /* 15/12/10 meters */
-			else if (currentfreq > 11000000) lpf = 0x40; /* 20/17 meters */
+			else if (currentfreq > 20000000) lpf = 0x20; /* 15/12/10 meters 0x20 */
+			else if (currentfreq > 11000000) lpf = 0x70; /* 20/17 meters 0x40*/
 			else if (currentfreq >  5500000) lpf = 0x02; /* 40/30 meters */
 			else if (currentfreq >  2500000) lpf = 0x04; /* 80/60 meters */
 			else lpf = 0x08; /* 160 meters */
